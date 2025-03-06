@@ -5,15 +5,15 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm.jsx";
 import Rank from "./components/Rank/Rank";
 import ParticlesBg from 'particles-bg';
 import { useState } from "react";
-import FaceRecognition from "./components/FaceRecognition.jsx";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 
 
-const returnClarifaiRequestOptions = (imageurl) => {
+const returnClarifaiRequestOptions = (imageUrl) => {
   const PAT = 'f267ee1270f74435a126fb33851fb86c';
   const USER_ID = 'elen23_cyberella';
   const APP_ID = 'facerecognitionbrain';
   const MODEL_ID = 'face-detection';
-  const IMAGE_URL = imageurl;
+  const IMAGE_URL = imageUrl;
 
 
   const raw = JSON.stringify({
@@ -25,7 +25,7 @@ const returnClarifaiRequestOptions = (imageurl) => {
         {
             "data": {
                 "image": {
-                    "url": imageurl
+                    "url": imageUrl
                 }
             }
         }

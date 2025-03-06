@@ -1,0 +1,9 @@
+.rank-container {
+    display: flex;
+    flex-direction: column; /* Stacks text vertically */
+    justify-content: center;
+    align-items: center; /* Centers content */
+    text-align: center; /* Ensures text is centered */
+    width: 100%; /* Makes it responsive */
+    margin-top: 20px; /* Adds some spacing */
+}
