@@ -11,13 +11,11 @@ function FaceRecognition({imageUrl, boxes}) {
                     return (
                         <div key={index} className='bounding-box'
                             style={{
-                                position: "absolute",
                                 top: `${box.topRow * 100}%`,
                                 left: `${box.leftCol * 100}%`,
                                 width: `${(box.rightCol - box.leftCol) * 100}%`,
                                 height: `${(box.bottomRow - box.topRow) * 100}%`
                             }}
-                          
                         />
                     );
                 })}

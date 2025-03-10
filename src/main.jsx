@@ -1,6 +1,8 @@
 import React, {Component, StrictMode} from "react";
 import { createRoot } from "react-dom/client";
 import Navigation from "./components/Navigation/Navigation.jsx";
+import Signin from "./components/Signin/signin.jsx";
+import Register from "./components/Register/Register.jsx";
 import Logo from "./components/Logo/Logo.jsx";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm.jsx";
 import Rank from "./components/Rank/Rank.jsx";
@@ -51,7 +53,9 @@ class App extends Component {
     this.state = {     //Sets up the initial state of the component.
       input: "",     // that is what the user will input
       imageUrl: "",   // should get displayed when we click onButtonSubmit
-      boxes : []  //Stores detected face bounding box coordinates.
+      boxes : [],  //Stores detected face bounding box coordinates.
+      route: 'signin',  //Keeps track of the current route of the app.
+      isSignedIn: false
 
     };
   } 
@@ -100,19 +104,38 @@ class App extends Component {
      .catch(error => console.log('error',error));
   }
 
+  onRouteChange = (route) => {   //This function is called when the route changes. 
+    if (route === 'signout') {
+      this.setState({isSignedIn: false});
+    } else if (route === 'home') {
+      this.setState({isSignedIn: true});
+    }
+    this.setState({route:route});  //Our route is going to be what we give it.
+  }
   render() {
+    const { isSignedIn, route, imageUrl, boxes } = this.state;
     return (
       <StrictMode>
           <ParticlesBg type="circle" bg={true} />
-          <Navigation />
-          <Logo />
-          <Rank />
-          <ImageLinkForm  
-            onInputChange={this.onInputChange} 
-            onButtonSubmit={this.onButtonSubmit}/>    
-          <FaceRecognition 
-            imageUrl={this.state.imageUrl}
-            boxes={this.state.boxes}/>
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+          { this.state.route === 'home' 
+             ? <div>
+                <Logo />
+                <Rank />
+                <ImageLinkForm  
+                  onInputChange={this.onInputChange} 
+                  onButtonSubmit={this.onButtonSubmit}/>    
+                <FaceRecognition 
+                  imageUrl={imageUrl}
+                  boxes={boxes}/>
+                </div>
+              : (route === 'signin' 
+                  ? <Signin onRouteChange={this.onRouteChange}/>
+                  : <Register onRouteChange={this.onRouteChange}/>
+                )
+          }
+           
+         
       </StrictMode>
     );
   }
