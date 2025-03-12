@@ -3,7 +3,7 @@ import "tachyons/css/tachyons.min.css";
 
 const Navigation = ({onRouteChange, isSignedIn}) => {
         if (isSignedIn) {
-            return (   //if we click on signout, it will go to signin.
+            return (   //if we click on signout, it will go to signin/register
                 <nav style={{display: "flex", justifyContent: "flex-end"}}>
                     <p onClick={() => onRouteChange('signout')} className='f3 link dim black underline pa3 pointer'>Sign Out</p>
                 </nav>

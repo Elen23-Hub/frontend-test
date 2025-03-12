@@ -55,10 +55,32 @@ class App extends Component {
       imageUrl: "",   // should get displayed when we click onButtonSubmit
       boxes : [],  //Stores detected face bounding box coordinates.
       route: 'signin',  //Keeps track of the current route of the app.
-      isSignedIn: false
-
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: '',
+        joined: ''
+      }
     };
   } 
+
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
+  }
+
+  // componentDidMount() {
+  //   fetch('http://localhost:3000/')
+  //     .then(response => response.json())
+  //     .then(console.log) //the data we get automatically get entered into here
+  // }
 
   onInputChange = (event) => {    // It's a prop of the App and will be called when the input field changes, we receive an event
     this.setState({ input: event.target.value });  //Updates the state of the component with the value of the input field.
@@ -131,7 +153,7 @@ class App extends Component {
                 </div>
               : (route === 'signin' 
                   ? <Signin onRouteChange={this.onRouteChange}/>
-                  : <Register onRouteChange={this.onRouteChange}/>
+                  : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                 )
           }
            
