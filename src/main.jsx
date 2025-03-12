@@ -91,37 +91,48 @@ class App extends Component {
     console.log('About to fetch Clarifai API');
     this.setState({ imageUrl: IMAGE_URL });   //Updates imageUrl in the state to display the submitted image.
 
-
     //fetch - sends a POST request to Clarifai’s API with the image URL.
     fetch("/clarifai/v2/models/"+ "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.input))
       .then(response => response.json())
       .then(result => {
-          console.log(result);   //Logs the API response to the console.
+        if (result) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {entries: count}))
+            })
+        }
 
-                         //Extracts first output from the API response[] and then gets face detection regions
-          const regions = result.outputs[0].data.regions;
-          const boxes = regions.map(region => {   //Loops through and maps the detected face regions to an array of bounding boxes.
-            const boundingBox = region.region_info.bounding_box;
-            return {
-              topRow: parseFloat (boundingBox.top_row.toFixed(3)),     //parseFloat - converts rounded values to numbers
-              leftCol: parseFloat (boundingBox.left_col.toFixed(3)),   // toFixed - rounds the value to 3 decimal places
-              bottomRow: parseFloat (boundingBox.bottom_row.toFixed(3)),
-              rightCol: parseFloat (boundingBox.right_col.toFixed(3))
-            }
+                        //Extracts first output from the API response[] and then gets face detection regions
+        const regions = result.outputs[0].data.regions;
+        const boxes = regions.map(region => {   //Loops through and maps the detected face regions to an array of bounding boxes.
+          const boundingBox = region.region_info.bounding_box;
+          return {
+            topRow: parseFloat (boundingBox.top_row.toFixed(3)),     //parseFloat - converts rounded values to numbers
+            leftCol: parseFloat (boundingBox.left_col.toFixed(3)),   // toFixed - rounds the value to 3 decimal places
+            bottomRow: parseFloat (boundingBox.bottom_row.toFixed(3)),
+            rightCol: parseFloat (boundingBox.right_col.toFixed(3))
           }
-          );
-          this.setState({ boxes });  //Updates the state with the detected face bounding boxes.
+        }
+        );
+        this.setState({ boxes });  //Updates the state with the detected face bounding boxes.
 
 
-          regions.forEach(region => {    // Logs face detection concepts & confidence and prints them to the console.
-              region.data.concepts.forEach(concept => {
-                  // Accessing and rounding the concept value
-                  const name = concept.name;
-                  const value = concept.value.toFixed(4);
+        regions.forEach(region => {    // Logs face detection concepts & confidence and prints them to the console.
+            region.data.concepts.forEach(concept => {
+                // Accessing and rounding the concept value
+                const name = concept.name;
+                const value = concept.value.toFixed(4);
 
-                  console.log(`${name}: ${value}`);  
-              });
-          });
+                console.log(`${name}: ${value}`);  
+            });
+        });
       })
      .catch(error => console.log('error',error));
   }
