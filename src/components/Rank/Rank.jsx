@@ -1,14 +1,14 @@
 import React from 'react';
 import './Rank.css';
 
-const Rank = () => {
+const Rank = ({ name, entries }) => { //passing the props name,entries into the Rank component
     return (
         <div className="rank-container">
           <div className='white f3'>
-            {`Eleni, your current entry count is...`}
+            {`${name}, your current entry count is...`}
           </div>
           <div className='white f3'>
-            {`#5`}
+            {entries}
           </div>
         </div>
       );
