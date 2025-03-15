@@ -46,24 +46,25 @@ const returnClarifaiRequestOptions = (imageUrl) => {
   return requestOptions
 };
 
+const initialState = {    
+  input: "",     // that is what the user will input
+  imageUrl: "",   // should get displayed when we click onButtonSubmit
+  boxes : [],  //Stores detected face bounding box coordinates.
+  route: 'signin',  //Keeps track of the current route of the app.
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 
 class App extends Component {
   constructor() {   
     super();    //Calls the parent class (Component) constructor to enable "this".
-    this.state = {     //Sets up the initial state of the component.
-      input: "",     // that is what the user will input
-      imageUrl: "",   // should get displayed when we click onButtonSubmit
-      boxes : [],  //Stores detected face bounding box coordinates.
-      route: 'signin',  //Keeps track of the current route of the app.
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    };
+    this.state = initialState;
   } 
 
   loadUser = (data) => {
@@ -75,12 +76,6 @@ class App extends Component {
       joined: data.joined
     }})
   }
-
-  // componentDidMount() {
-  //   fetch('http://localhost:3000/')
-  //     .then(response => response.json())
-  //     .then(console.log) //the data we get automatically get entered into here
-  // }
 
   onInputChange = (event) => {    // It's a prop of the App and will be called when the input field changes, we receive an event
     this.setState({ input: event.target.value });  //Updates the state of the component with the value of the input field.
@@ -107,6 +102,7 @@ class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, {entries: count}))
             })
+            .catch(console.log)
         }
 
                         //Extracts first output from the API response[] and then gets face detection regions
@@ -139,7 +135,7 @@ class App extends Component {
 
   onRouteChange = (route) => {   //This function is called when the route changes. 
     if (route === 'signout') {
-      this.setState({isSignedIn: false});
+      this.setState(initialState);
     } else if (route === 'home') {
       this.setState({isSignedIn: true});
     }
