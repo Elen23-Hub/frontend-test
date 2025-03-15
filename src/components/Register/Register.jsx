@@ -31,7 +31,7 @@ class Register extends React.Component {
         })
             .then(response => response.json())
             .then(user => {
-                if (user) {  //if we get a user back, we will RouteChange to home
+                if (user.id) {  //if we get a user back, we will RouteChange to home
                     this.props.loadUser(user)
                     this.props.onRouteChange('home');
                 }
