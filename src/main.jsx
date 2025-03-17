@@ -12,41 +12,6 @@ import './index.css';
 import "tachyons/css/tachyons.min.css";
 
 
-// const returnClarifaiRequestOptions = (imageUrl) => {
-//   const PAT = 'f267ee1270f74435a126fb33851fb86c';
-//   const USER_ID = 'elen23_cyberella';
-//   const APP_ID = 'facerecognitionbrain';
-//   const MODEL_ID = 'face-detection';
-//   const IMAGE_URL = imageUrl;
-
-//   const raw = JSON.stringify({
-//     user_app_id: {
-//       user_id: USER_ID,
-//       app_id: APP_ID
-//     },
-//     inputs: [
-//       {
-//         data: {
-//           image: {
-//             url: imageUrl
-//           }
-//         }
-//       }
-//     ]
-//   });
-  
-//   const requestOptions = {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Authorization': 'Key ' + PAT
-//     },
-//     body: raw
-//   };
-//   return requestOptions
-// };
-
-
 const initialState = {    
   input: "",     // that is what the user will input
   imageUrl: "",   // should get displayed when we click onButtonSubmit
