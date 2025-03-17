@@ -12,39 +12,40 @@ import './index.css';
 import "tachyons/css/tachyons.min.css";
 
 
-const returnClarifaiRequestOptions = (imageUrl) => {
-  const PAT = 'f267ee1270f74435a126fb33851fb86c';
-  const USER_ID = 'elen23_cyberella';
-  const APP_ID = 'facerecognitionbrain';
-  const MODEL_ID = 'face-detection';
-  const IMAGE_URL = imageUrl;
+// const returnClarifaiRequestOptions = (imageUrl) => {
+//   const PAT = 'f267ee1270f74435a126fb33851fb86c';
+//   const USER_ID = 'elen23_cyberella';
+//   const APP_ID = 'facerecognitionbrain';
+//   const MODEL_ID = 'face-detection';
+//   const IMAGE_URL = imageUrl;
 
-  const raw = JSON.stringify({
-    user_app_id: {
-      user_id: USER_ID,
-      app_id: APP_ID
-    },
-    inputs: [
-      {
-        data: {
-          image: {
-            url: imageUrl
-          }
-        }
-      }
-    ]
-  });
+//   const raw = JSON.stringify({
+//     user_app_id: {
+//       user_id: USER_ID,
+//       app_id: APP_ID
+//     },
+//     inputs: [
+//       {
+//         data: {
+//           image: {
+//             url: imageUrl
+//           }
+//         }
+//       }
+//     ]
+//   });
   
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Key ' + PAT
-    },
-    body: raw
-  };
-  return requestOptions
-};
+//   const requestOptions = {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Authorization': 'Key ' + PAT
+//     },
+//     body: raw
+//   };
+//   return requestOptions
+// };
+
 
 const initialState = {    
   input: "",     // that is what the user will input
@@ -86,8 +87,12 @@ class App extends Component {
     console.log('About to fetch Clarifai API');
     this.setState({ imageUrl: IMAGE_URL });   //Updates imageUrl in the state to display the submitted image.
 
-    //fetch - sends a POST request to Clarifai’s API with the image URL.
-    fetch("/clarifai/v2/models/"+ "face-detection" + "/outputs", returnClarifaiRequestOptions(this.state.input))
+    fetch('http://localhost:3000/imageurl', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        input: IMAGE_URL })
+    })
       .then(response => response.json())
       .then(result => {
         if (result) {
@@ -109,16 +114,15 @@ class App extends Component {
         const regions = result.outputs[0].data.regions;
         const boxes = regions.map(region => {   //Loops through and maps the detected face regions to an array of bounding boxes.
           const boundingBox = region.region_info.bounding_box;
-          return {
-            topRow: parseFloat (boundingBox.top_row.toFixed(3)),     //parseFloat - converts rounded values to numbers
-            leftCol: parseFloat (boundingBox.left_col.toFixed(3)),   // toFixed - rounds the value to 3 decimal places
-            bottomRow: parseFloat (boundingBox.bottom_row.toFixed(3)),
-            rightCol: parseFloat (boundingBox.right_col.toFixed(3))
+            return {
+              topRow: parseFloat (boundingBox.top_row.toFixed(3)),     //parseFloat - converts rounded values to numbers
+              leftCol: parseFloat (boundingBox.left_col.toFixed(3)),   // toFixed - rounds the value to 3 decimal places
+              bottomRow: parseFloat (boundingBox.bottom_row.toFixed(3)),
+              rightCol: parseFloat (boundingBox.right_col.toFixed(3))
+            }
           }
-        }
-        );
+          );
         this.setState({ boxes });  //Updates the state with the detected face bounding boxes.
-
 
         regions.forEach(region => {    // Logs face detection concepts & confidence and prints them to the console.
             region.data.concepts.forEach(concept => {
