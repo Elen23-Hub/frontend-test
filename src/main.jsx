@@ -52,7 +52,7 @@ class App extends Component {
     console.log('About to fetch Clarifai API');
     this.setState({ imageUrl: IMAGE_URL });   //Updates imageUrl in the state to display the submitted image.
 
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://pythia-api.onrender.com/imageurl', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ 
@@ -61,7 +61,7 @@ class App extends Component {
       .then(response => response.json())
       .then(result => {
         if (result) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://pythia-api.onrender.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
