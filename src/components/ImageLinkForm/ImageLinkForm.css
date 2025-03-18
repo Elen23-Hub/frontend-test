@@ -1,20 +1,32 @@
 .form {
-    align-items: center;
-    width: 700px;
-    background:
-radial-gradient(black 15%, transparent 16%) 0 0,
-radial-gradient(black 15%, transparent 16%) 8px 8px,
-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
-background-color:#282828;
-background-size:16px 16px;
+  align-items: center;
+  width: 700px;
+  max-width: 90%; /* Make it responsive */ 
+  background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+  padding: 20px;      
+  display: flex;
   } 
 
 .f3 {
-
   display: flex;
   flex-direction: column; /* Stacks text vertically */
   justify-content: center;
   align-items: center; /* Centers content */
   text-align: center; /* Ensures text is centered */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .form {width: 90%;} /* Adjusts form width for smaller screens */
+  .f4 {font-size: 14px;} /* Reduce text size for smaller screens */
+  button {
+      font-size: 14px;
+      width: 100px; /* Ensures button remains readable */
+  }
 }
