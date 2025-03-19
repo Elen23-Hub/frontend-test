@@ -1,12 +1,27 @@
-# React + Vite
+# Smart-Brain
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Smart-Brain is my first attempt to create a web application that detects faces in images using an AI model from Clarifai. Built with React for the frontend and Node.js for the backend, it allows users to register, sign in, and track their image submissions.
 
-Currently, two official plugins are available:
+## Live Demo
+The project was deployed on **Render**. Check out the live app here: (https://pythia-btyu.onrender.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- User authentication (register and sign in)
+- Upload an image URL to detect faces
+- Bounding boxes drawn around detected faces
+- User score tracking for submitted images
+- Beautiful UI with Particles.js animation
 
-## Expanding the ESLint configuration
+## Technologies Used
+### Frontend
+- React (built with Vite)
+- CSS / HTML
+- Tachyons (for styling)
+- Particles-bg
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend (Not included in this repo)
+- Node.js with Express
+- Clarifai API (for face detection)
+- bcryptjs for hashing passwords
+- PostgreSQL database and knex.js to connect it to the backend server 
+- You can find more info at the backend repository here: (https://github.com/Elen23-Hub/Smart-brain-server)
