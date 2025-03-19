@@ -1,6 +1,6 @@
-# Smart-Brain
+# Frontend
 
-Smart-Brain is my first attempt to create a web application that detects faces in images using an AI model from Clarifai. Built with React for the frontend and Node.js for the backend, it allows users to register, sign in, and track their image submissions.
+Smart-brain is my first attempt to create a web application that detects faces in images using an AI model from Clarifai. Built with React for the frontend and Node.js for the backend, it allows users to register, sign in, and track their image submissions.
 
 ## Live Demo
 The project was deployed on **Render**. Check out the live app here: (https://pythia-btyu.onrender.com/)
