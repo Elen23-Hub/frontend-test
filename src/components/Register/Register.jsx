@@ -1,5 +1,7 @@
 import  React from 'react'; 
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -19,8 +21,10 @@ class Register extends React.Component {
     onPasswordChange = (event) => {
         this.setState({password: event.target.value})
     }    
+
     onSubmitSignIn = () => {
-        fetch('https://pythia-api.onrender.com/register', {
+        fetch(`${API_URL}/register`, {
+        // fetch(`/register`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify ({

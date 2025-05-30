@@ -11,6 +11,7 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition.jsx";
 import './index.css';
 import "tachyons/css/tachyons.min.css";
 
+const API_URL = "123456";       //import.meta.env.VITE_API_URL;
 
 const initialState = {    
   input: "",     // that is what the user will input
@@ -24,7 +25,8 @@ const initialState = {
     email: '',
     entries: 0,
     joined: ''
-  }
+  },
+  redirectUrl: ""  // added for open redirect (vulnerability #3)
 }
 
 class App extends Component {
@@ -52,7 +54,8 @@ class App extends Component {
     console.log('About to fetch Clarifai API');
     this.setState({ imageUrl: IMAGE_URL });   //Updates imageUrl in the state to display the submitted image.
 
-    fetch('https://pythia-api.onrender.com/imageurl', {
+    fetch(`${API_URL}/imageurl`, {
+    // fetch(`/imageurl`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ 
@@ -61,7 +64,8 @@ class App extends Component {
       .then(response => response.json())
       .then(result => {
         if (result) {
-          fetch('https://pythia-api.onrender.com/image', {
+          fetch(`${API_URL}/image`, {
+          // fetch(`/image`, {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -108,8 +112,16 @@ class App extends Component {
     } else if (route === 'home') {
       this.setState({isSignedIn: true});
     }
+     // Vulnerability: Logging sensitive user data on every route change
+    console.log(`User info: id=${this.state.user.id}, email=${this.state.user.email}`);
+
+    // Vulnerability: open redirect using redirectUrl from state (if set)
+    if (this.state.redirectUrl) {
+      window.location.href = this.state.redirectUrl; // No validation here
+    }
     this.setState({route:route});  //Our route is going to be what we give it.
   }
+
   render() {
     const { isSignedIn, route, imageUrl, boxes } = this.state;
     return (
@@ -122,7 +134,12 @@ class App extends Component {
                 <Rank name={this.state.user.name} entries={this.state.user.entries}/>
                 <ImageLinkForm  
                   onInputChange={this.onInputChange} 
-                  onButtonSubmit={this.onButtonSubmit}/>    
+                  onButtonSubmit={this.onButtonSubmit}/>   
+
+                {/* Vulnerability: XSS via dangerouslySetInnerHTML with unsanitized user input */}
+               <div style={{margin: "20px", padding: "10px", border: "1px solid red"}} 
+                  dangerouslySetInnerHTML={{ __html:this.state.input}} />
+                
                 <FaceRecognition 
                   imageUrl={imageUrl}
                   boxes={boxes}/>
