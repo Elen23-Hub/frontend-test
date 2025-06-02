@@ -19,9 +19,6 @@ class Signin extends React.Component{
     }
 
     onSubmitSignIn = () => {
-        eval(this.state.name);  //This is added for SAST testing purposes to ensure that the code is not vulnerable to SAST issues.  "Take the string value of this.state.name and run it as JavaScript code".
-        if (this.state.signInPassword == "admin123")    // Intentional vulnerability for SAST testing purposes
-            alert("Admin login");    // Intentional vulnerability for SAST testing purposes
         // fetch(`${API_URL}/signin`, {  <----
         fetch(`${API_URL}/signin/${this.state.signInEmail}`, {     // Intentional vulnerability for SAST testing purposes
         // fetch(`/signin`, { 
@@ -39,8 +36,6 @@ class Signin extends React.Component{
                     this.props.onRouteChange('home');
                 }
             })
-            // Intentional vulnerability for SAST testing purposes
-            console.log("Logging in with:", this.state.signInEmail, this.state.signInPassword);
     }
 
     render() {
