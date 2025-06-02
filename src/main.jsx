@@ -113,6 +113,7 @@ class App extends Component {
     }
     this.setState({route:route});  //Our route is going to be what we give it.
   }
+  
 
   render() {
     const { isSignedIn, route, imageUrl, boxes } = this.state;
