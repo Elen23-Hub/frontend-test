@@ -75,7 +75,7 @@ class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, {entries: count}))
             })
-            // .catch(console.log)  Intentional vulnerability - Missing .catch block
+         // .catch(console.log)  Intentional vulnerability - Missing .catch block
         }
 
                         //Extracts first output from the API response[] and then gets face detection regions
