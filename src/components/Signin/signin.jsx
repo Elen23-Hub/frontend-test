@@ -24,6 +24,7 @@ class Signin extends React.Component{
         // fetch(`/signin`, { 
             method: 'post',
             headers: {'Content-Type': 'application/json'},
+            credentials: 'include', // Include credentials for CORS 
             body: JSON.stringify ({
                 email: this.state.signInEmail,
                 password: this.state.signInPassword

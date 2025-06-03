@@ -57,6 +57,7 @@ class App extends Component {
     // fetch(`/imageurl`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
+      credentials: 'include', // Include credentials for CORS 
       body: JSON.stringify({ 
         input: IMAGE_URL })
     })
@@ -67,6 +68,7 @@ class App extends Component {
           // fetch(`/image`, {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
+            credentials: 'include', // Include credentials for CORS 
             body: JSON.stringify({
               id: this.state.user.id
             })

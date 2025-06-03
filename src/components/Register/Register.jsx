@@ -27,6 +27,7 @@ class Register extends React.Component {
         // fetch(`/register`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
+            credentials: 'include', // Include credentials for CORS 
             body: JSON.stringify ({
                 email: this.state.email,
                 password: this.state.password,
