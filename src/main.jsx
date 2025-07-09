@@ -24,7 +24,7 @@ const initialState = {
     name: '',
     email: '',
     entries: 0,
-    joined: ''
+    joined: '',
   }
 }
 
@@ -75,12 +75,18 @@ class App extends Component {
           })
             .then(response => response.json())
             .then(count => {
+              // this.setState(prevState => ({     //better way to use setState when referencing to a revious state
+              //         user: {
+              //           ...prevState.user,
+              //           entries: count
+              //         }
+              //       }));
               this.setState(Object.assign(this.state.user, {entries: count}))
             })
          // .catch(console.log)  Intentional vulnerability - Missing .catch block
         }
 
-                        //Extracts first output from the API response[] and then gets face detection regions
+        //Extracts first output from the API response[] and then gets face detection regions
         const regions = result.outputs[0].data.regions;
         const boxes = regions.map(region => {   //Loops through and maps the detected face regions to an array of bounding boxes.
           const boundingBox = region.region_info.bounding_box;
