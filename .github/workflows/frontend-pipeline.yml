@@ -22,7 +22,20 @@ jobs:
     - name: Build App
       run: npm run build
     
-    
+  sast:
+    runs-on: ubuntu-latest
+    needs: setup
 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-  
+    - name: Run Horusec (SAST)
+      run: |
+        docker run --rm \
+          -v ${{ github.workspace }}:/src \
+          horuszup/horusec-cli:latest horusec start \
+            -p /src \
+            -D \
+            --severity=HIGH,CRITICAL
+      continue-on-error: false  # Fail the job if high/critical vulnerabilities are found
