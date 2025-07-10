@@ -33,9 +33,12 @@ jobs:
     - name: Run Horusec (SAST)
       run: |
         docker run --rm \
-          -v ${{ github.workspace }}:/src \
-          horuszup/horusec-cli:latest horusec start \
-            -p /src \
-            -D \
-            --severity=HIGH,CRITICAL
+        -v ${{ github.workspace }}:/src \
+        horuszup/horusec-cli:latest horusec start \
+          -p /src \
+          -D \
+          --information-severity=true \
+          -s="LOW,MEDIUM" \
+          -e
+          docker run --rm \
       continue-on-error: false  # Fail the job if high/critical vulnerabilities are found
