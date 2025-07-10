@@ -37,7 +37,6 @@ jobs:
         horuszup/horusec-cli:latest horusec start \
           -p /src \
           -D \
-          --information-severity=true \
           -s="LOW,MEDIUM" \
           -e
           docker run --rm \
