@@ -39,5 +39,3 @@ jobs:
           -D \
           -s="LOW,MEDIUM" \
           -e
-          docker run --rm \
-      continue-on-error: false  # Fail the job if high/critical vulnerabilities are found
