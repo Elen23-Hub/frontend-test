@@ -19,11 +19,11 @@ class Signin extends React.Component{
     }
 
     onSubmitSignIn = () => {
-        if (this.state.signInPassword == "admin123") {
-            alert("Admin access granted!")
-        }
-        // fetch(`${API_URL}/signin`, {  <----
-        fetch(`${API_URL}/signin/${this.state.signInEmail}`, {     // Intentional vulnerability for SAST testing purposes
+        // if (this.state.signInPassword == "admin123") {
+        //     alert("Admin access granted!")
+        // }
+        fetch(`${API_URL}/signin`, { 
+        // fetch(`${API_URL}/signin/${this.state.signInEmail}`, {     // Intentional vulnerability for SAST testing purposes
         // fetch(`/signin`, { 
             method: 'post',
             headers: {'Content-Type': 'application/json'},

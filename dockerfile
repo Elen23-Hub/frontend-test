@@ -2,7 +2,7 @@
 FROM node:18 AS builder
 WORKDIR /app
 # Copy files and install dependencies. Using ADD = intentional vulnerability
-ADD package*.json ./
+COPY package*.json ./
 RUN npm install
 # Copy source code, including .env.production
 COPY . .
@@ -15,7 +15,7 @@ RUN npm run build
 #FROM nginx:alpine
 FROM nginx:1.25.3-alpine3.18  
 # Install specific vulnerable libxml2 version 2.13.4-r5, trivy vuln
-#RUN apk update && apk upgrade libxml2   
+RUN apk update && apk upgrade libxml2   
 # Create a custom non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Copy built files from builder
