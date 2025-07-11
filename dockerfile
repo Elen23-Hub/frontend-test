@@ -12,11 +12,9 @@ ENV NODE_ENV=production
 RUN npm run build
 
 # ---- Production Stage ----
-FROM nginx:alpine
-#FROM nginx:1.25.3-alpine3.18  test test
+#FROM nginx:alpine
+FROM nginx:1.25.3-alpine3.18  
 # Install specific vulnerable libxml2 version 2.13.4-r5, trivy vuln
-RUN apk add --no-cache libxml2=2.13.4-r5
-
 #RUN apk update && apk upgrade libxml2   
 # Create a custom non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
