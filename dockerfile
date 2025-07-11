@@ -2,7 +2,7 @@
 FROM node:18 AS builder
 WORKDIR /app
 # Copy files and install dependencies. Using ADD = intentional vulnerability
-COPY package*.json ./
+ADD package*.json ./
 RUN npm install
 # Copy source code, including .env.production
 COPY . .
